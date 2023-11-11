@@ -7,9 +7,10 @@ const baseURL = process.env.REACT_APP_API_URL;
 
 const Users = () => {
   const [userList, setUserList] = useState<UserPayload[]>([]);
-  const { data, error, isLoading } = useSWR(`${baseURL}/api/users`, fetcher);
 
   useEffect(() => {
+    const { data, error, isLoading } = useSWR(`${baseURL}/api/users`, fetcher);
+
     setUserList(data);
   }, []);
 
