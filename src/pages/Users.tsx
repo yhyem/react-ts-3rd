@@ -6,15 +6,28 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const baseURL = process.env.REACT_APP_API_URL;
 
 const Users = () => {
-  const [userList, setUserList] = useState<UserPayload[]>([]);
+  const [userList, setUserList] = useState<UserPayload>();
+  const { data, error, isLoading } = useSWR<UserPayload>(
+    `${baseURL}/api/users`,
+    fetcher,
+  );
 
   useEffect(() => {
-    const { data, error, isLoading } = useSWR(`${baseURL}/api/users`, fetcher);
-
     setUserList(data);
-  }, []);
+  }, [data]);
 
-  return <>{userList && userList.map((user) => user)}</>;
+  return (
+    <>
+      {userList &&
+        userList.users.map((user) => (
+          <>
+            <div>{user.email}</div>
+            <div>{user.password}</div>
+            <div>{user.username}</div>
+          </>
+        ))}
+    </>
+  );
 };
 
 export default Users;

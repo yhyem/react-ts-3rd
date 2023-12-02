@@ -1,3 +1,9 @@
 export interface UserPayload {
-  data: [];
+  users: User[];
+}
+
+interface User {
+  email: string;
+  password: string;
+  username: string;
 }
